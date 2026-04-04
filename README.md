@@ -1,4 +1,4 @@
-# Patient Care Assistant System (مساعد العناية بالمرضى)
+# Patient Care Assistant System 
 
 A comprehensive full-stack healthcare solution designed specifically to assist nurses and caregivers in tracking and managing patient care routines. The system focuses heavily on preventing pressure ulcers by providing a reliable mechanism to log and monitor the positioning of immobile patients.
 
