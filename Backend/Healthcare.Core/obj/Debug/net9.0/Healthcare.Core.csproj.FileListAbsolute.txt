@@ -1,0 +1,12 @@
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\bin\Debug\net9.0\Healthcare.Core.deps.json
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\bin\Debug\net9.0\Healthcare.Core.dll
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\bin\Debug\net9.0\Healthcare.Core.pdb
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.AssemblyInfoInputs.cache
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.AssemblyInfo.cs
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.csproj.CoreCompileInputs.cache
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.sourcelink.json
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.dll
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\refint\Healthcare.Core.dll
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\Healthcare.Core.pdb
+D:\Projects-AI\Healthcare\Backend\Healthcare.Core\obj\Debug\net9.0\ref\Healthcare.Core.dll

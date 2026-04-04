@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "مساعد العناية بالمرضى",
+    "slug": "patient-care-assistant",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1E6C65"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fayad.patientcare"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1E6C65"
+      },
+      "package": "com.fayad.patientcare"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "update-with-eas-project-id"
+      }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
+  }
+}
