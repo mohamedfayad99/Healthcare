@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client from '../api/client';
+import Toast from 'react-native-root-toast';
 
 export default function PatientsScreen({ navigation }) {
   const { t } = useTranslation();
@@ -23,6 +24,37 @@ export default function PatientsScreen({ navigation }) {
     });
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    const notifyIfNeeded = () => {
+      const needsMoveCount = patients.filter(p => {
+        if (!p.lastPositionLog) return true;
+        const diffHours = (new Date() - new Date(p.lastPositionLog.changedAt)) / 3600000;
+        return diffHours > 2;
+      }).length;
+
+      if (needsMoveCount > 0) {
+        Toast.show(`تنبيه: حان وقت تغيير وضعية ${needsMoveCount} مريض!`, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.TOP,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          backgroundColor: '#e74c3c'
+        });
+      }
+    };
+
+    if (patients.length > 0) {
+      notifyIfNeeded();
+      const interval = setInterval(fetchPatients, 10000); // refresh list every 10 sec automatically
+      const toastInterval = setInterval(notifyIfNeeded, 60000); // notify every minute if needed
+      return () => {
+        clearInterval(interval);
+        clearInterval(toastInterval);
+      };
+    }
+  }, [patients]);
 
   const getTimeElapsed = (dateString) => {
     if (!dateString) return '';
@@ -100,6 +132,10 @@ export default function PatientsScreen({ navigation }) {
         renderItem={renderItem}
         contentContainerStyle={styles.list}
       />
+
+      <TouchableOpacity style={styles.fab} onPress={() => navigation.navigate('AddPatient')}>
+        <Text style={styles.fabIcon}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -155,5 +191,26 @@ const styles = StyleSheet.create({
   status: { alignItems: 'flex-end', justifyContent: 'center' },
   badge: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 15, marginBottom: 5 },
   badgeText: { fontSize: 12, fontWeight: 'bold' },
-  sinceText: { fontSize: 10, color: '#999' }
+  sinceText: { fontSize: 10, color: '#999' },
+  fab: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 20,
+    backgroundColor: '#1E6C65',
+    borderRadius: 30,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5
+  },
+  fabIcon: {
+    fontSize: 28,
+    color: 'white',
+    lineHeight: 30
+  }
 });

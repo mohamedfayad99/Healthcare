@@ -37,6 +37,41 @@ public static class Route
             return Results.Ok(new { Token = tokenHandler.WriteToken(token), Username = user.Username, Role = user.Role });
         });
 
+        app.MapPost("/api/auth/register", async (AppDbContext db, UserRegisterDto dto) =>
+        {
+            if (await db.Users.AnyAsync(u => u.Username == dto.Username))
+                return Results.BadRequest(new { Message = "Username already exists" });
+
+            var newUser = new User
+            {
+                Username = dto.Username,
+                Role = dto.Role
+                // Typically you would hash the password here, but we'll accept plain text per the existing demo setup
+            };
+
+            db.Users.Add(newUser);
+            await db.SaveChangesAsync();
+
+            return Results.Ok(new { Message = "User registered successfully" });
+        });
+
+        app.MapPost("/api/patients", async (PatientCreateDto dto, AppDbContext db) =>
+        {
+            var newPatient = new Patient
+            {
+                FullName = dto.FullName,
+                Age = dto.Age,
+                Department = dto.Department,
+                BedNumber = dto.BedNumber,
+                MobilityStatus = dto.MobilityStatus
+            };
+
+            db.Patients.Add(newPatient);
+            await db.SaveChangesAsync();
+
+            return Results.Created($"/api/patients/{newPatient.Id}", newPatient);
+        });
+
         app.MapGet("/api/patients", async (AppDbContext db) =>
         {
             var patients = await db.Patients
@@ -115,4 +150,6 @@ public static class Route
 }
 
 public class UserLoginDto { public string Username { get; set; } = string.Empty; public string Password { get; set; } = string.Empty; }
+public class UserRegisterDto { public string Username { get; set; } = string.Empty; public string Password { get; set; } = string.Empty; public string Role { get; set; } = "Nurse"; }
+public class PatientCreateDto { public string FullName { get; set; } = string.Empty; public int Age { get; set; } = 0; public string Department { get; set; } = string.Empty; public string BedNumber { get; set; } = string.Empty; public string MobilityStatus { get; set; } = string.Empty; }
 public class PositionCreateDto { public string TargetPosition { get; set; } = string.Empty; }

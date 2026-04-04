@@ -4093,8 +4093,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj": {
-              "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj"
+            "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj": {
+              "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj"
             }
           }
         }

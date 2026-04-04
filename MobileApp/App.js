@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 // import * as Notifications from 'expo-notifications';
 import i18n from './src/i18n/i18n';
 import AppNavigator from './src/navigation/AppNavigator';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 /* 
 Notifications.setNotificationHandler({
@@ -31,9 +32,11 @@ export default function App() {
   }, []);
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <AppNavigator />
-      <StatusBar style="light" backgroundColor="#1E6C65" />
-    </I18nextProvider>
+    <RootSiblingParent>
+      <I18nextProvider i18n={i18n}>
+        <AppNavigator />
+        <StatusBar style="light" backgroundColor="#1E6C65" />
+      </I18nextProvider>
+    </RootSiblingParent>
   );
 }

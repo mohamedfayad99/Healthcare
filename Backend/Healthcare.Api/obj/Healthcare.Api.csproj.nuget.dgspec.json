@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Api\\Healthcare.Api.csproj": {}
+    "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Api\\Healthcare.Api.csproj": {}
   },
   "projects": {
-    "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Api\\Healthcare.Api.csproj": {
+    "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Api\\Healthcare.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Api\\Healthcare.Api.csproj",
+        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Api\\Healthcare.Api.csproj",
         "projectName": "Healthcare.Api",
-        "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Api\\Healthcare.Api.csproj",
+        "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Api\\Healthcare.Api.csproj",
         "packagesPath": "C:\\Users\\al-aqsa\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Api\\obj\\",
+        "outputPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,11 +32,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj": {
-                "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj"
+              "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj": {
+                "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj"
               },
-              "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj": {
-                "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj"
+              "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj": {
+                "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj": {
+    "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj",
+        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj",
         "projectName": "Healthcare.Core",
-        "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj",
+        "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj",
         "packagesPath": "C:\\Users\\al-aqsa\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\obj\\",
+        "outputPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -160,14 +160,14 @@
         }
       }
     },
-    "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj": {
+    "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj",
         "projectName": "Healthcare.Infrastructure",
-        "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj",
+        "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\Healthcare.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\al-aqsa\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Infrastructure\\obj\\",
+        "outputPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -188,8 +188,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj": {
-                "projectPath": "D:\\Projects-AI\\Healthcare\\backend\\Healthcare.Core\\Healthcare.Core.csproj"
+              "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj": {
+                "projectPath": "D:\\Projects-AI\\Healthcare\\Backend\\Healthcare.Core\\Healthcare.Core.csproj"
               }
             }
           }

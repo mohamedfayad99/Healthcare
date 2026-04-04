@@ -58,8 +58,10 @@ export default function LoginScreen({ navigation }) {
           textAlign="right"
         />
 
-        <View style={styles.optionsRow}>
-          <Text style={styles.forgotPassword}>{t('forgot_password')}</Text>
+          <View style={styles.optionsRow}>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.forgotPassword}>إنشاء حساب جديد</Text>
+          </TouchableOpacity>
           <View style={styles.checkboxRow}>
             <Text style={styles.checkboxText}>{t('remember_me')}</Text>
             <View style={styles.checkbox} />
