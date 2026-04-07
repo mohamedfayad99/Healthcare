@@ -79,7 +79,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4F7F6',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 10,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   forgotPassword: {
-    color: '#1E6C65',
+    color: '#007AFF',
     fontSize: 14,
   },
   checkboxRow: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   loginButton: {
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     borderRadius: 8,
     padding: 15,
     alignItems: 'center',

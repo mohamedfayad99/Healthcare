@@ -8,4 +8,5 @@ public class Patient
     public string BedNumber { get; set; } = string.Empty;
     public string Department { get; set; } = "Intensive Care";
     public string MobilityStatus { get; set; } = "Immobile";
+    public int CreatedByUserId { get; set; }
 }

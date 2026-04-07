@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client from '../api/client';
 
@@ -29,6 +29,29 @@ export default function PatientDetailsScreen({ route, navigation }) {
     return unsubscribe;
   }, [navigation]);
 
+  const handleDelete = () => {
+    Alert.alert(
+      t('alert') || 'تأكيد',
+      'هل أنت متأكد من حذف هذا المريض؟',
+      [
+        { text: 'إلغاء', style: 'cancel' },
+        { 
+          text: 'حذف', 
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await client.delete(`/patients/${patientId}`);
+              navigation.goBack();
+            } catch (error) {
+              console.error(error);
+              Alert.alert('خطأ', 'تعذر حذف المريض');
+            }
+          }
+        }
+      ]
+    );
+  };
+
   if (loading) return <ActivityIndicator size="large" color="#1E6C65" style={{flex: 1, justifyContent: 'center'}} />;
   if (!patient) return <Text>Error loading patient</Text>;
 
@@ -43,13 +66,15 @@ export default function PatientDetailsScreen({ route, navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>{"<"}</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>{t('patient_details')}</Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Text style={styles.backButtonText}>❮</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>{t('patient_details')}</Text>
+          <View style={{ width: 60 }} />
+        </View>
 
       <View style={styles.profileCard}>
         <View style={styles.avatar}>
@@ -93,32 +118,41 @@ export default function PatientDetailsScreen({ route, navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity 
-        style={[styles.changePositionButton, { backgroundColor: '#4E9F9D', marginTop: 0 }]}
+        style={[styles.changePositionButton, { backgroundColor: '#0050A0', marginTop: 0 }]}
         onPress={() => navigation.navigate('FollowUp', { patientId: patient.id })}
       >
         <Text style={styles.changePositionButtonText}>{t('follow_up_record')}</Text>
       </TouchableOpacity>
-    </ScrollView>
+
+      <TouchableOpacity 
+        style={[styles.changePositionButton, { backgroundColor: '#e74c3c', marginTop: 0, marginBottom: 40 }]}
+        onPress={handleDelete}
+      >
+        <Text style={styles.changePositionButtonText}>حذف المريض</Text>
+      </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F4F7F6' },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
   header: {
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     padding: 20,
     paddingTop: 50,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  backButton: { marginRight: 15 },
+  backButton: { padding: 10, width: 60 },
   backButtonText: { color: '#fff', fontSize: 24, fontWeight: 'bold' },
-  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center', marginLeft: -30 },
+  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', textAlign: 'center' },
   profileCard: {
     backgroundColor: '#fff', flexDirection: 'row', padding: 20, alignItems: 'center',
-    margin: 15, borderRadius: 12, elevation: 2
+    margin: 15, borderRadius: 12, elevation: 4, shadowColor: '#000', shadowOpacity: 0.1, shadowOffset: {width: 0, height: 2}
   },
-  avatar: { width: 60, height: 60, borderRadius: 30, backgroundColor: '#1E6C65', justifyContent: 'center', alignItems: 'center', marginRight: 15 },
+  avatar: { width: 60, height: 60, borderRadius: 30, backgroundColor: '#82C0FF', justifyContent: 'center', alignItems: 'center', marginRight: 15 },
   avatarIcon: { fontSize: 30 },
   profileInfo: { flex: 1, alignItems: 'flex-start' },
   name: { fontSize: 18, fontWeight: 'bold', color: '#333', textAlign: 'left' },
@@ -128,9 +162,9 @@ const styles = StyleSheet.create({
   infoBox: { backgroundColor: '#fff', flex: 0.48, padding: 15, borderRadius: 12, elevation: 1, alignItems: 'center' },
   infoLabel: { fontSize: 13, color: '#666', marginBottom: 5 },
   infoValue: { fontSize: 15, fontWeight: 'bold', color: '#333', textAlign: 'center' },
-  largeInfoBox: { backgroundColor: '#fff', margin: 15, padding: 15, borderRadius: 12, elevation: 1, alignItems: 'center' },
-  positionBadge: { backgroundColor: '#E4F4EF', alignSelf: 'flex-end', marginRight: 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20 },
-  positionText: { color: '#1E6C65', fontWeight: 'bold' },
-  changePositionButton: { backgroundColor: '#1E6C65', margin: 20, padding: 15, borderRadius: 10, alignItems: 'center' },
+  largeInfoBox: { backgroundColor: '#fff', margin: 15, padding: 15, borderRadius: 12, elevation: 2, alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.1, shadowOffset: {width: 0, height: 2}},
+  positionBadge: { backgroundColor: '#E0F0FF', alignSelf: 'flex-end', marginRight: 20, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20 },
+  positionText: { color: '#0050A0', fontWeight: 'bold' },
+  changePositionButton: { backgroundColor: '#007AFF', margin: 20, padding: 15, borderRadius: 10, alignItems: 'center' },
   changePositionButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
 });

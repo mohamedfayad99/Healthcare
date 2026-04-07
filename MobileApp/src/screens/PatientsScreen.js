@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client from '../api/client';
 import Toast from 'react-native-root-toast';
@@ -8,6 +8,8 @@ export default function PatientsScreen({ navigation }) {
   const { t } = useTranslation();
   const [patients, setPatients] = useState([]);
   const [search, setSearch] = useState('');
+  const [userAuthInfo, setUserAuthInfo] = useState(null);
+  const [hasNewNotification, setHasNewNotification] = useState(false);
 
   const fetchPatients = async () => {
     try {
@@ -21,9 +23,19 @@ export default function PatientsScreen({ navigation }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchPatients();
+      fetchMe();
     });
     return unsubscribe;
   }, [navigation]);
+
+  const fetchMe = async () => {
+    try {
+      const res = await client.get('/auth/me');
+      setUserAuthInfo(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     const notifyIfNeeded = () => {
@@ -34,6 +46,7 @@ export default function PatientsScreen({ navigation }) {
       }).length;
 
       if (needsMoveCount > 0) {
+        setHasNewNotification(true);
         Toast.show(`تنبيه: حان وقت تغيير وضعية ${needsMoveCount} مريض!`, {
           duration: Toast.durations.LONG,
           position: Toast.positions.TOP,
@@ -48,7 +61,17 @@ export default function PatientsScreen({ navigation }) {
     if (patients.length > 0) {
       notifyIfNeeded();
       const interval = setInterval(fetchPatients, 10000); // refresh list every 10 sec automatically
-      const toastInterval = setInterval(notifyIfNeeded, 60000); // notify every minute if needed
+      // Local notification every 2 hours:
+      const toastInterval = setInterval(() => {
+        setHasNewNotification(true);
+        notifyIfNeeded();
+        // Also just a general reminder every 2 hours
+        Toast.show(`تذكير عام: تفقد المرضى!`, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.TOP,
+          backgroundColor: '#007AFF'
+        });
+      }, 7200000); // 2 hours
       return () => {
         clearInterval(interval);
         clearInterval(toastInterval);
@@ -111,8 +134,15 @@ export default function PatientsScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.headerUserInfo}>
+          <Text style={styles.headerName}>{userAuthInfo ? userAuthInfo.username : '...'}</Text>
+          <TouchableOpacity onPress={() => { setHasNewNotification(false); Alert?.alert('الإشعارات', 'لا توجد إشعارات جديدة'); }} style={styles.bellContainer}>
+            <Text style={styles.notificationIcon}>🔔</Text>
+            {hasNewNotification && <View style={styles.redDot} />}
+          </TouchableOpacity>
+        </View>
         <Text style={styles.headerTitle}>{t('patients_list')}</Text>
       </View>
       <View style={styles.searchContainer}>
@@ -133,23 +163,32 @@ export default function PatientsScreen({ navigation }) {
         contentContainerStyle={styles.list}
       />
 
+      <TouchableOpacity style={styles.profileFab} onPress={() => navigation.navigate('Profile')}>
+        <Text style={styles.fabIcon}>👤</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.fab} onPress={() => navigation.navigate('AddPatient')}>
         <Text style={styles.fabIcon}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F4F7F6' },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
   header: {
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     padding: 20,
     paddingTop: 50,
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
+  headerUserInfo: { flexDirection: 'row', alignItems: 'center' },
+  headerName: { color: '#fff', fontSize: 16, marginRight: 10, fontWeight: 'bold' },
+  bellContainer: { position: 'relative' },
+  notificationIcon: { fontSize: 24, color: '#fff' },
+  redDot: { position: 'absolute', top: -2, right: -2, width: 10, height: 10, borderRadius: 5, backgroundColor: 'red', borderWidth: 1, borderColor: '#fff' },
   headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold' },
   searchContainer: {
     flexDirection: 'row',
@@ -181,7 +220,7 @@ const styles = StyleSheet.create({
   cardContent: { flexDirection: 'row', alignItems: 'center' },
   avatar: {
     width: 50, height: 50, borderRadius: 25,
-    backgroundColor: '#4E9F9D', justifyContent: 'center', alignItems: 'center',
+    backgroundColor: '#82C0FF', justifyContent: 'center', alignItems: 'center',
     marginRight: 15
   },
   avatarIcon: { fontSize: 24, color: '#fff' },
@@ -200,7 +239,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 20,
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
+    borderRadius: 30,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5
+  },
+  profileFab: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 20,
+    bottom: 20,
+    backgroundColor: '#0050A0',
     borderRadius: 30,
     elevation: 8,
     shadowColor: '#000',

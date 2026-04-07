@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client from '../api/client';
 
@@ -34,12 +34,13 @@ export default function PositionChangeScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>{"<"}</Text>
+          <Text style={styles.backButtonText}>❮</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('position_options')}</Text>
+        <View style={{ width: 60 }} />
       </View>
 
       <View style={styles.infoBanner}>
@@ -65,24 +66,25 @@ export default function PositionChangeScreen({ route, navigation }) {
       <TouchableOpacity style={styles.saveButton} onPress={handleSavePosition}>
         <Text style={styles.saveButtonText}>{t('done_change')}</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F4F7F6' },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
   header: {
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     padding: 20,
     paddingTop: 50,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  backButton: { marginRight: 15 },
+  backButton: { padding: 10, width: 60 },
   backButtonText: { color: '#fff', fontSize: 24, fontWeight: 'bold' },
-  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center', marginLeft: -30 },
+  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', textAlign: 'center' },
   infoBanner: {
-    backgroundColor: '#D1E8E2',
+    backgroundColor: '#E0F0FF',
     margin: 15,
     padding: 15,
     borderRadius: 8,
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end'
   },
-  infoText: { color: '#1E6C65', marginRight: 10, fontWeight: 'bold' },
+  infoText: { color: '#0050A0', marginRight: 10, fontWeight: 'bold' },
   infoIcon: { fontSize: 20 },
   grid: {
     flexDirection: 'row',
@@ -110,18 +112,18 @@ const styles = StyleSheet.create({
     elevation: 2
   },
   selectedCard: {
-    borderColor: '#1E6C65',
-    backgroundColor: '#E4F4EF'
+    borderColor: '#007AFF',
+    backgroundColor: '#E0F0FF'
   },
   iconContainer: {
-    width: 60, height: 60, borderRadius: 30, backgroundColor: '#F4F7F6',
+    width: 60, height: 60, borderRadius: 30, backgroundColor: '#F0F8FF',
     justifyContent: 'center', alignItems: 'center', marginBottom: 10
   },
   positionIcon: { fontSize: 30 },
   positionLabel: { fontSize: 16, fontWeight: 'bold', color: '#333' },
-  selectedLabel: { color: '#1E6C65' },
+  selectedLabel: { color: '#007AFF' },
   saveButton: {
-    backgroundColor: '#1E6C65',
+    backgroundColor: '#007AFF',
     margin: 20,
     padding: 15,
     borderRadius: 10,

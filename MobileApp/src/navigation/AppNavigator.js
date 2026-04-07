@@ -8,6 +8,7 @@ import PositionChangeScreen from '../screens/PositionChangeScreen';
 import FollowUpRecordScreen from '../screens/FollowUpRecordScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AddPatientScreen from '../screens/AddPatientScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function AppNavigator() {
         <Stack.Screen name="PatientDetails" component={PatientDetailsScreen} />
         <Stack.Screen name="PositionChange" component={PositionChangeScreen} />
         <Stack.Screen name="FollowUp" component={FollowUpRecordScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
