@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client, { setAuthToken } from '../api/client';
 
 export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
-  const [username, setUsername] = useState('hamid');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
@@ -28,50 +28,52 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <View style={styles.logoContainer}>
-        <View style={styles.logoCircle}>
-          <Text style={styles.logoText}>❤️</Text>
-        </View>
-        <Text style={styles.title}>مساعد العناية بالمرضى</Text>
-        <Text style={styles.subtitle}>متابعة وتنبيه تغيير وضعية المرضى</Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>{t('login')}</Text>
-
-        <Text style={styles.label}>{t('username')}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={t('enter_username')}
-          value={username}
-          onChangeText={setUsername}
-          textAlign="right"
-        />
-
-        <Text style={styles.label}>{t('password')}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={t('enter_password')}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          textAlign="right"
-        />
-
-          <View style={styles.optionsRow}>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.forgotPassword}>إنشاء حساب جديد</Text>
-          </TouchableOpacity>
-          <View style={styles.checkboxRow}>
-            <Text style={styles.checkboxText}>{t('remember_me')}</Text>
-            <View style={styles.checkbox} />
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
+        <View style={styles.logoContainer}>
+          <View style={styles.logoCircle}>
+            <Text style={styles.logoText}>❤️</Text>
           </View>
+          <Text style={styles.title}>مساعد العناية بالمرضى</Text>
+          <Text style={styles.subtitle}>متابعة وتنبيه تغيير وضعية المرضى</Text>
         </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>{t('login')}</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>{t('login')}</Text>
+
+          <Text style={styles.label}>{t('username')}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t('enter_username')}
+            value={username}
+            onChangeText={setUsername}
+            textAlign="right"
+          />
+
+          <Text style={styles.label}>{t('password')}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t('enter_password')}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            textAlign="right"
+          />
+
+            <View style={styles.optionsRow}>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+              <Text style={styles.forgotPassword}>إنشاء حساب جديد</Text>
+            </TouchableOpacity>
+            <View style={styles.checkboxRow}>
+              <Text style={styles.checkboxText}>{t('remember_me')}</Text>
+              <View style={styles.checkbox} />
+            </View>
+          </View>
+
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.loginButtonText}>{t('login')}</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -83,6 +85,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
   },
   logoContainer: {
     alignItems: 'center',

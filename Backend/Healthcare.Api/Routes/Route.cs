@@ -59,6 +59,12 @@ public static class Route
             return Results.Ok(new { Message = "User registered successfully" });
         });
 
+        app.MapGet("/api/beds/occupied", async (AppDbContext db) =>
+        {
+            var occupiedBeds = await db.Patients.Select(p => p.BedNumber).ToListAsync();
+            return Results.Ok(occupiedBeds);
+        });
+
         app.MapPost("/api/patients", async (HttpContext context, PatientCreateDto dto, AppDbContext db) =>
         {
             var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -208,11 +214,28 @@ public static class Route
             
             return Results.Ok(new { Message = "Profile image updated successfully", ProfileImage = user.ProfileImage });
         }).RequireAuthorization();
+        app.MapPut("/api/auth/profile", async (HttpContext context, UserProfileUpdateDto dto, AppDbContext db) =>
+        {
+            var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+                return Results.Unauthorized();
+                
+            var user = await db.Users.FindAsync(userId);
+            if (user == null) return Results.NotFound();
+            
+            if (!string.IsNullOrEmpty(dto.Username)) user.Username = dto.Username;
+            if (!string.IsNullOrEmpty(dto.PhoneNumber)) user.PhoneNumber = dto.PhoneNumber;
+            
+            await db.SaveChangesAsync();
+            
+            return Results.Ok(new { Message = "Profile updated successfully", Username = user.Username, PhoneNumber = user.PhoneNumber });
+        }).RequireAuthorization();
     }
 }
 
 public class UserLoginDto { public string Username { get; set; } = string.Empty; public string Password { get; set; } = string.Empty; }
 public class UserRegisterDto { public string Username { get; set; } = string.Empty; public string Password { get; set; } = string.Empty; public string Role { get; set; } = "Nurse"; public string ProfileImage { get; set; } = string.Empty; public string NationalId { get; set; } = string.Empty; public string Gender { get; set; } = string.Empty; public string PhoneNumber { get; set; } = string.Empty; }
+public class UserProfileUpdateDto { public string? Username { get; set; } public string? PhoneNumber { get; set; } }
 public class PatientCreateDto { public string FullName { get; set; } = string.Empty; public int Age { get; set; } = 0; public string Department { get; set; } = string.Empty; public string BedNumber { get; set; } = string.Empty; public string MobilityStatus { get; set; } = string.Empty; }
 public class PositionCreateDto { public string TargetPosition { get; set; } = string.Empty; }
 public class ProfileImageUpdateDto { public string ImageBase64 { get; set; } = string.Empty; }

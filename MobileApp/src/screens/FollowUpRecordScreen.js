@@ -53,8 +53,8 @@ export default function FollowUpRecordScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>{"<"}</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <Text style={styles.backButtonText}>{"❮"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('follow_up_record')}</Text>
       </View>
@@ -72,15 +72,17 @@ export default function FollowUpRecordScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F4F7F6' },
   header: {
-    backgroundColor: '#1E6C65',
-    padding: 20,
-    paddingTop: 50,
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 20,
+    paddingTop: 55,
+    paddingBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  backButton: { marginRight: 15 },
+  backButton: { width: 40 },
   backButtonText: { color: '#fff', fontSize: 24, fontWeight: 'bold' },
-  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center', marginLeft: -30 },
+  headerTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center' },
   list: { paddingHorizontal: 20, paddingTop: 20 },
   logCard: { flexDirection: 'row', marginBottom: 20 },
   timelineContainer: { alignItems: 'center', width: 60, marginRight: 15 },
