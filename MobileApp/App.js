@@ -1,34 +1,21 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { I18nextProvider } from 'react-i18next';
-// Notifications in Expo Go Android (SDK 53+) require a Development Build.
-// We comment these out so you can test the UI in Expo Go without crashing.
-// import * as Notifications from 'expo-notifications';
 import i18n from './src/i18n/i18n';
 import AppNavigator from './src/navigation/AppNavigator';
 import { RootSiblingParent } from 'react-native-root-siblings';
-
-/* 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-*/
+import * as Notifications from 'expo-notifications';
+import { addNotificationResponseListener } from './src/api/notificationHelper';
 
 export default function App() {
   useEffect(() => {
-    /* 
-    const requestPermissions = async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission for notifications not granted');
-      }
-    };
-    requestPermissions();
-    */
+    // Listen for notification responses (user tapping on a notification)
+    const unsubscribe = addNotificationResponseListener((data) => {
+      console.log('Notification tapped with data:', data);
+      // Handle navigation or other actions based on data
+    });
+
+    return () => unsubscribe();
   }, []);
 
   return (

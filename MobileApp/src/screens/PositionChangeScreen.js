@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import client from '../api/client';
 import Toast from 'react-native-root-toast';
 import { PATIENT_POSITIONS } from '../constants/positions';
+import { schedulePositionChangeReminder } from '../api/notificationHelper';
 
 export default function PositionChangeScreen({ route, navigation }) {
   const { patientId, patientName, bedNumber } = route.params;
@@ -29,6 +30,9 @@ export default function PositionChangeScreen({ route, navigation }) {
         hideOnPress: true,
         backgroundColor: '#28A745',
       });
+
+      // Schedule LOCAL notification for 2 hours later
+      await schedulePositionChangeReminder(patientName, bedNumber);
 
       navigation.goBack();
     } catch (error) {

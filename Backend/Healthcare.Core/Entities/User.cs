@@ -9,4 +9,6 @@ public class User
     public string NationalId { get; set; } = string.Empty;
     public string Gender { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
+    public string? PushToken { get; set; }
+    public string? Platform { get; set; }
 }

@@ -50,7 +50,6 @@ public static class Route
                 NationalId = dto.NationalId,
                 Gender = dto.Gender,
                 PhoneNumber = dto.PhoneNumber
-                // Typically you would hash the password here, but we'll accept plain text per the existing demo setup
             };
 
             db.Users.Add(newUser);
@@ -174,6 +173,7 @@ public static class Route
             };
             return Results.Created($"/api/patients/{id}/positions/{log.Id}", resultLog);
         }).RequireAuthorization();
+
         app.MapDelete("/api/patients/{id}", async (HttpContext context, int id, AppDbContext db) =>
         {
             var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -197,7 +197,7 @@ public static class Route
             var user = await db.Users.FindAsync(userId);
             if (user == null) return Results.NotFound();
             
-            return Results.Ok(new { user.Id, user.Username, user.Role, user.ProfileImage, user.NationalId, user.Gender, user.PhoneNumber });
+            return Results.Ok(new { user.Id, user.Username, user.Role, user.ProfileImage, user.NationalId, user.Gender, user.PhoneNumber, user.PushToken });
         }).RequireAuthorization();
 
         app.MapPut("/api/auth/profile-image", async (HttpContext context, ProfileImageUpdateDto dto, AppDbContext db) =>
@@ -214,6 +214,7 @@ public static class Route
             
             return Results.Ok(new { Message = "Profile image updated successfully", ProfileImage = user.ProfileImage });
         }).RequireAuthorization();
+
         app.MapPut("/api/auth/profile", async (HttpContext context, UserProfileUpdateDto dto, AppDbContext db) =>
         {
             var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -230,6 +231,23 @@ public static class Route
             
             return Results.Ok(new { Message = "Profile updated successfully", Username = user.Username, PhoneNumber = user.PhoneNumber });
         }).RequireAuthorization();
+
+        app.MapPost("/api/devices/register", async (HttpContext context, DeviceRegistrationDto dto, AppDbContext db) =>
+        {
+            var userIdStr = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+                return Results.Unauthorized();
+
+            var user = await db.Users.FindAsync(userId);
+            if (user == null) return Results.NotFound();
+
+            user.PushToken = dto.Token;
+            user.Platform = dto.Platform;
+
+            await db.SaveChangesAsync();
+
+            return Results.Ok(new { Message = "Device registered successfully" });
+        }).RequireAuthorization();
     }
 }
 
@@ -239,3 +257,4 @@ public class UserProfileUpdateDto { public string? Username { get; set; } public
 public class PatientCreateDto { public string FullName { get; set; } = string.Empty; public int Age { get; set; } = 0; public string Department { get; set; } = string.Empty; public string BedNumber { get; set; } = string.Empty; public string MobilityStatus { get; set; } = string.Empty; }
 public class PositionCreateDto { public string TargetPosition { get; set; } = string.Empty; }
 public class ProfileImageUpdateDto { public string ImageBase64 { get; set; } = string.Empty; }
+public class DeviceRegistrationDto { public string Token { get; set; } = string.Empty; public string Platform { get; set; } = string.Empty; }

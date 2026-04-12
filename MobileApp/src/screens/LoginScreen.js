@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import client, { setAuthToken } from '../api/client';
+import { registerForPushNotifications, sendTokenToBackend } from '../api/notificationHelper';
 
 export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
@@ -16,10 +17,19 @@ export default function LoginScreen({ navigation }) {
       }
 
       const response = await client.post('/auth/login', { username, password: password || 'dummy' });
-      if (response.data && response.data.token) {
         setAuthToken(response.data.token);
+        
+        // Push Notification Registration
+        try {
+          const token = await registerForPushNotifications();
+          if (token) {
+            await sendTokenToBackend(token);
+          }
+        } catch (pushError) {
+          console.log('[Login] Push registration skipped or failed:', pushError);
+        }
+
         navigation.replace('Patients');
-      }
     } catch (error) {
       console.error(error);
       Alert.alert(t('alert'), 'Invalid credentials');
