@@ -88,20 +88,20 @@ export async function sendTokenToBackend(token) {
 }
 
 /**
- * Schedules a LOCAL notification for 10 seconds later (FOR TESTING).
+ * Schedules a LOCAL notification for 2 hours later.
  */
 export async function schedulePositionChangeReminder(patientName, bedNumber) {
   try {
     const identifier = `reminder-${patientName}-${bedNumber}`;
     await Notifications.cancelScheduledNotificationAsync(identifier);
 
-    // CHANGED TO 10 SECONDS FOR TESTING
-    const seconds = 10; 
+    // Set to 7200 seconds (2 hours)
+    const seconds = 7200; 
     
     const id = await Notifications.scheduleNotificationAsync({
       content: {
-        title: "⏰ تنبيه: تغيير وضعية المريض",
-        body: `لقد مضى 10 ثواني (اختبار). يرجى تغيير وضعية المريض: ${patientName} (سرير ${bedNumber})`,
+        title: "⏰ تنبيه: وقت تغيير الوضعية",
+        body: `لقد مضى ساعتان على آخر تغيير. يرجى تغيير وضعية المريض: ${patientName} (سرير ${bedNumber})`,
         data: { patientName, bedNumber },
         sound: 'default',
         channelId: 'default',
@@ -113,7 +113,7 @@ export async function schedulePositionChangeReminder(patientName, bedNumber) {
       identifier: identifier
     });
 
-    console.log(`[LocalPush] Scheduled 10-second test for ${patientName}.`);
+    console.log(`[LocalPush] Scheduled 2-hour reminder for ${patientName}.`);
     return id;
   } catch (error) {
     console.error('[LocalPush] Schedule error:', error);

@@ -9,7 +9,12 @@ import { addNotificationResponseListener } from './src/api/notificationHelper';
 
 export default function App() {
   useEffect(() => {
-    // Listen for notification responses (user tapping on a notification)
+    // Clear all stale notifications on startup once to ensure old test messages are gone
+    Notifications.cancelAllScheduledNotificationsAsync()
+      .then(() => console.log('Stale notifications cleared'))
+      .catch(err => console.error('Error clearing notifications:', err));
+
+    // Listen for notification responses
     const unsubscribe = addNotificationResponseListener((data) => {
       console.log('Notification tapped with data:', data);
       // Handle navigation or other actions based on data

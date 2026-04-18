@@ -23,7 +23,7 @@ export default function FollowUpRecordScreen({ route, navigation }) {
 
   const renderLogItem = ({ item }) => {
     const d = new Date(item.changedAt);
-    const time = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+    const time = d.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true });
     const isMissed = item.isMissed;
     const color = isMissed ? '#E74C3C' : '#27AE60'; 
 

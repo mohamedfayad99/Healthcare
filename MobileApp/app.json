@@ -27,8 +27,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "update-with-eas-project-id"
+        "projectId": ""
       }
+    },
+    "updates": {
+      "enabled": false
     },
     "plugins": [
       "expo-localization"

@@ -155,9 +155,17 @@ export default function PatientsScreen({ navigation }) {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Text style={styles.headerWelcome}>{t('welcome') || 'مرحباً'}،</Text>
-          <Text style={styles.headerName}>{userAuthInfo ? userAuthInfo.username.split(' ')[0] : '...'}</Text>
+          <Text style={styles.headerName}>
+            {userAuthInfo ? userAuthInfo.username.split(' ')[0] : '...'}
+          </Text>
         </View>
         <View style={styles.headerRight}>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('About')} 
+            style={styles.headerIconButton}
+          >
+            <Ionicons name="information-circle-outline" size={28} color="#fff" />
+          </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => { 
                 const needMove = patients.filter(p => {
@@ -192,13 +200,6 @@ export default function PatientsScreen({ navigation }) {
               </View>
             )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.avatarHeader}>
-            {userAuthInfo?.profileImage ? (
-              <Image source={{ uri: userAuthInfo.profileImage }} style={styles.avatarHeaderImage} />
-            ) : (
-              <Ionicons name="person" size={28} color="#007AFF" />
-            )}
-          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.searchContainer}>
@@ -220,7 +221,11 @@ export default function PatientsScreen({ navigation }) {
 
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerTab} onPress={() => navigation.navigate('Profile')}>
-          <Ionicons name="person" size={24} color="#007AFF" />
+          {userAuthInfo?.profileImage ? (
+            <Image source={{ uri: userAuthInfo.profileImage }} style={styles.footerAvatar} />
+          ) : (
+            <Ionicons name="person" size={24} color="#007AFF" />
+          )}
           <Text style={styles.footerText}>الحساب</Text>
         </TouchableOpacity>
 
@@ -262,6 +267,17 @@ const styles = StyleSheet.create({
   headerWelcome: { color: 'rgba(255,255,255,0.8)', fontSize: 14 },
   headerName: { color: '#fff', fontSize: 20, fontWeight: 'bold' },
   headerRight: { flexDirection: 'row', alignItems: 'center' },
+  headerIconButton: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    padding: 10,
+    borderRadius: 12,
+    marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3
+  },
   bellContainer: { 
     backgroundColor: '#fff', 
     padding: 10, 
@@ -390,5 +406,13 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   footerText: { fontSize: 10, color: '#8E8E93', fontWeight: '500' },
-  footerTextActive: { fontSize: 10, color: '#007AFF', fontWeight: '700', marginTop: 15 }
+  footerTextActive: { fontSize: 10, color: '#007AFF', fontWeight: '700', marginTop: 15 },
+  footerAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    marginBottom: 4
+  }
 });

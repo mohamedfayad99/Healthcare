@@ -195,6 +195,19 @@ const styles = StyleSheet.create({
   detailValue: { fontSize: 14, fontWeight: 'bold', color: '#1C1C1E' },
   logoutBtn: { backgroundColor: '#FF3B30', flexDirection: 'row-reverse', paddingHorizontal: 30, paddingVertical: 15, borderRadius: 15, width: '90%', alignItems: 'center', marginTop: 30, justifyContent: 'center' },
   logoutText: { color: 'white', fontWeight: 'bold', fontSize: 16 },
+  aboutBtn: { 
+    flexDirection: 'row-reverse', 
+    paddingHorizontal: 30, 
+    paddingVertical: 15, 
+    borderRadius: 15, 
+    width: '90%', 
+    alignItems: 'center', 
+    marginTop: 20, 
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#007AFF'
+  },
+  aboutText: { color: '#007AFF', fontWeight: 'bold', fontSize: 16 },
   editBtn: { backgroundColor: 'rgba(255,255,255,0.2)', paddingHorizontal: 15, paddingVertical: 8, borderRadius: 12 },
   editBtnText: { color: '#fff', fontWeight: 'bold' },
   inputEdit: { 
