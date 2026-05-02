@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import client, { setAuthToken } from '../api/client';
+import localApiService from '../api/localApiService';
+import { setAuthToken } from '../api/client';
 import { registerForPushNotifications, sendTokenToBackend } from '../api/notificationHelper';
 
 export default function LoginScreen({ navigation }) {
@@ -16,7 +18,7 @@ export default function LoginScreen({ navigation }) {
         return;
       }
 
-      const response = await client.post('/auth/login', { username, password: password || 'dummy' });
+      const response = await localApiService.login(username, password || 'dummy');
         setAuthToken(response.data.token);
         
         // Push Notification Registration
@@ -41,10 +43,10 @@ export default function LoginScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
         <View style={styles.logoContainer}>
           <View style={styles.logoCircle}>
-            <Text style={styles.logoText}>❤️</Text>
+            <MaterialCommunityIcons name="heart-pulse" size={45} color="white" />
           </View>
-          <Text style={styles.title}>مساعد العناية بالمرضى</Text>
-          <Text style={styles.subtitle}>متابعة وتنبيه تغيير وضعية المرضى</Text>
+          <Text style={styles.title}>رعاية+</Text>
+          <Text style={styles.subtitle}>متابعة أفضل - رعاية أفضل</Text>
         </View>
 
         <View style={styles.card}>
@@ -107,26 +109,29 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   logoCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
-  },
-  logoText: {
-    fontSize: 24,
+    marginBottom: 15,
+    elevation: 10,
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 5,
+    color: '#003366',
+    marginBottom: 2,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#7f8c8d',
+    fontSize: 15,
+    color: '#007AFF',
+    fontWeight: '500',
   },
   card: {
     width: '100%',

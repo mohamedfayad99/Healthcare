@@ -7,8 +7,15 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import * as Notifications from 'expo-notifications';
 import { addNotificationResponseListener } from './src/api/notificationHelper';
 
+import { initDatabase } from './src/api/database';
+
 export default function App() {
   useEffect(() => {
+    // Initialize Local Database
+    initDatabase()
+      .then(() => console.log('Database Ready'))
+      .catch(err => console.error('Database Init Error:', err));
+
     // Clear all stale notifications on startup once to ensure old test messages are gone
     Notifications.cancelAllScheduledNotificationsAsync()
       .then(() => console.log('Stale notifications cleared'))

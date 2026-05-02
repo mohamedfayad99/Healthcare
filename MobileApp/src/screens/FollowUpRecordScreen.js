@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 
 export default function FollowUpRecordScreen({ route, navigation }) {
   const { patientId } = route.params;
@@ -10,7 +10,7 @@ export default function FollowUpRecordScreen({ route, navigation }) {
 
   const fetchLogs = async () => {
     try {
-      const response = await client.get(`/patients/${patientId}/positions`);
+      const response = await localApiService.getPositionLogs(patientId);
       setLogs(response.data);
     } catch (error) {
       console.error(error);
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   line: { width: 2, flex: 1, backgroundColor: '#E0E0E0', marginTop: -5 },
   logContent: { flex: 1, backgroundColor: '#fff', padding: 15, borderRadius: 12, elevation: 1 },
   actionText: { fontSize: 14, color: '#333' },
-  positionText: { fontSize: 16, fontWeight: 'bold', color: '#1E6C65', marginTop: 5 },
+  positionText: { fontSize: 16, fontWeight: 'bold', color: '#0056b3', marginTop: 5 },
   byText: { fontSize: 12, color: '#888', marginTop: 10 },
   missedText: { fontSize: 14, color: '#E74C3C', fontWeight: 'bold' }
 });

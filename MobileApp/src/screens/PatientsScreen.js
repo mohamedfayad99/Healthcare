@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Alert, SafeAreaView, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 import Toast from 'react-native-root-toast';
 import { getPositionByLabel } from '../constants/positions';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,7 +20,7 @@ export default function PatientsScreen({ navigation }) {
 
   const fetchPatients = async () => {
     try {
-      const response = await client.get('/patients');
+      const response = await localApiService.getPatients();
       setPatients(response.data);
       
       const hasPatientsNeedingRotation = response.data.some(p => {
@@ -44,7 +44,7 @@ export default function PatientsScreen({ navigation }) {
 
   const fetchMe = async () => {
     try {
-      const res = await client.get('/auth/me');
+      const res = await localApiService.getMe();
       setUserAuthInfo(res.data);
     } catch (e) {
       console.error(e);

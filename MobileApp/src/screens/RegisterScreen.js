@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView, Image, SafeAreaView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function RegisterScreen({ navigation }) {
@@ -40,7 +41,7 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       const payload = { username, password, role, profileImage, nationalId, gender, phoneNumber };
-      const response = await client.post('/auth/register', payload);
+      const response = await localApiService.register(payload);
       if (response.data) {
         Alert.alert('نجاح', 'تم إنشاء الحساب بنجاح!', [{ text: 'دخول', onPress: () => navigation.replace('Login') }]);
       }
@@ -61,10 +62,10 @@ export default function RegisterScreen({ navigation }) {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.logoContainer}>
             <View style={styles.logoCircle}>
-              <Text style={styles.logoText}>📝</Text>
+               <MaterialCommunityIcons name="heart-pulse" size={35} color="white" />
             </View>
-            <Text style={styles.title}>إنشاء حساب جديد</Text>
-            <Text style={styles.subtitle}>مساعد العناية بالمرضى</Text>
+            <Text style={styles.title}>رعاية+</Text>
+            <Text style={styles.subtitle}>متابعة أفضل - رعاية أفضل</Text>
           </View>
 
           <View style={styles.card}>
@@ -172,10 +173,18 @@ const styles = StyleSheet.create({
   backBtnText: { color: '#007AFF', fontSize: 24, fontWeight: 'bold' },
   scrollContent: { flexGrow: 1, alignItems: 'center', padding: 20, paddingBottom: 50 },
   logoContainer: { alignItems: 'center', marginBottom: 25 },
-  logoCircle: { width: 60, height: 60, borderRadius: 30, backgroundColor: '#007AFF', alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
-  logoText: { fontSize: 24 },
-  title: { fontSize: 22, fontWeight: 'bold', color: '#0050A0', marginBottom: 5 },
-  subtitle: { fontSize: 13, color: '#007AFF' },
+  logoCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    elevation: 5
+  },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#003366', marginBottom: 2 },
+  subtitle: { fontSize: 13, color: '#007AFF', fontWeight: '500' },
   card: { width: '100%', backgroundColor: '#fff', borderRadius: 20, padding: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.1, shadowRadius: 15, elevation: 8 },
   cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center', color: '#333' },
   imagePickerContainer: { alignSelf: 'center', marginBottom: 20 },

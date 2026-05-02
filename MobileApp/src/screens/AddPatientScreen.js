@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ScrollView, SafeAreaView } from 'react-native';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 import { Ionicons } from '@expo/vector-icons';
 import { schedulePositionChangeReminder } from '../api/notificationHelper';
 
@@ -33,7 +33,7 @@ export default function AddPatientScreen({ navigation }) {
 
   const fetchOccupiedBeds = async () => {
     try {
-      const res = await client.get('/api/beds/occupied');
+      const res = await localApiService.getOccupiedBeds();
       setOccupiedBeds(res.data.map(b => b.toString()));
     } catch (err) {
       console.error(err);
@@ -47,7 +47,7 @@ export default function AddPatientScreen({ navigation }) {
     }
 
     try {
-      const response = await client.post('/patients', {
+      const response = await localApiService.createPatient({
         fullName,
         age: parseInt(age, 10),
         department,
@@ -55,7 +55,7 @@ export default function AddPatientScreen({ navigation }) {
         mobilityStatus
       });
 
-      if (response.status === 201) {
+      if (response.data) {
         // Schedule initial LOCAL notification for 2 hours later
         await schedulePositionChangeReminder(fullName, bedNumber);
 

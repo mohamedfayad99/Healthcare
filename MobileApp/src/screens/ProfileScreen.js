@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, TextInput, SafeAreaView, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import client, { setAuthToken } from '../api/client';
+import localApiService from '../api/localApiService';
+import { setAuthToken } from '../api/client';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -18,7 +19,7 @@ export default function ProfileScreen({ navigation }) {
 
   const fetchProfile = async () => {
     try {
-      const res = await client.get('/auth/me');
+      const res = await localApiService.getMe();
       setUser(res.data);
       setEditedUsername(res.data.username);
       setEditedPhone(res.data.phoneNumber);
@@ -31,7 +32,7 @@ export default function ProfileScreen({ navigation }) {
 
   const handleUpdateProfile = async () => {
     try {
-      await client.put('/auth/profile', {
+      await localApiService.updateProfile({
         username: editedUsername,
         phoneNumber: editedPhone
       });
@@ -56,7 +57,7 @@ export default function ProfileScreen({ navigation }) {
     if (!result.canceled && result.assets[0].base64) {
       const base64Img = `data:image/jpeg;base64,${result.assets[0].base64}`;
       try {
-        await client.put('/auth/profile-image', { imageBase64: base64Img });
+        await localApiService.updateProfileImage(base64Img);
         setUser({ ...user, profileImage: base64Img });
         Alert.alert('نجاح', 'تم تحديث الصورة بنجاح');
       } catch (err) {

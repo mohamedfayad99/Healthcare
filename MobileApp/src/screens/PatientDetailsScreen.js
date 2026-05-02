@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 
 import { PATIENT_POSITIONS, getPositionByLabel } from '../constants/positions';
 import { Image } from 'react-native';
@@ -15,7 +15,7 @@ export default function PatientDetailsScreen({ route, navigation }) {
 
   const fetchPatientDetails = async () => {
     try {
-      const response = await client.get(`/patients/${patientId}`);
+      const response = await localApiService.getPatientById(patientId);
       setPatient(response.data.patient);
       setLastLog(response.data.lastPositionLog);
     } catch (error) {
@@ -43,7 +43,7 @@ export default function PatientDetailsScreen({ route, navigation }) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await client.delete(`/patients/${patientId}`);
+              await localApiService.deletePatient(patientId);
               navigation.goBack();
             } catch (error) {
               console.error(error);

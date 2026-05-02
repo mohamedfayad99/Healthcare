@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, SafeAreaView, Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import client from '../api/client';
+import localApiService from '../api/localApiService';
 import Toast from 'react-native-root-toast';
 import { PATIENT_POSITIONS } from '../constants/positions';
 import { schedulePositionChangeReminder } from '../api/notificationHelper';
@@ -19,7 +19,7 @@ export default function PositionChangeScreen({ route, navigation }) {
 
     try {
       const positionId = selectedPosition;
-      await client.post(`/patients/${patientId}/positions`, { targetPosition: positionId });
+      await localApiService.addPositionLog(patientId, positionId);
       
       // Success Toast
       Toast.show('تم التغيير', {

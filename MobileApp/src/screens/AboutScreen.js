@@ -48,10 +48,10 @@ export default function AboutScreen({ navigation }) {
         {/* App Info Card */}
         <View style={styles.appInfoCard}>
            <View style={styles.logoContainer}>
-              <Ionicons name="heart-half" size={50} color="#1E6C65" />
+              <Ionicons name="pulse" size={50} color="#0056b3" />
            </View>
            <View style={styles.appDetails}>
-              <Text style={styles.appNameText}>مساعد العناية بالمرضى</Text>
+              <Text style={styles.appNameText}>رعاية+</Text>
               <Text style={styles.versionText}>الإصدار 1.0.0</Text>
            </View>
         </View>
@@ -145,7 +145,7 @@ export default function AboutScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F9FB' },
   header: {
-    backgroundColor: '#1E6C65', padding: 20, paddingTop: 50, paddingBottom: 25,
+    backgroundColor: '#0056b3', padding: 20, paddingTop: 50, paddingBottom: 25,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     borderBottomLeftRadius: 30, borderBottomRightRadius: 30, elevation: 10
   },
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   memberName: { fontSize: 11, color: '#333', fontWeight: 'bold', flex: 1, textAlign: 'right' },
   closeButton: {
-    backgroundColor: '#1E6C65', borderRadius: 15, padding: 18,
+    backgroundColor: '#0056b3', borderRadius: 15, padding: 18,
     alignItems: 'center', marginTop: 10, marginBottom: 20, elevation: 5
   },
   closeButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }
