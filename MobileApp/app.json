@@ -20,7 +20,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.fayad.patientcare"
+      "package": "com.fayad.patientcare",
+      "compileSdk": 34,
+      "targetSdk": 34
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,7 +37,9 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-notifications",
+      "expo-image-picker"
     ]
   }
 }
