@@ -76,26 +76,20 @@ export async function registerForPushNotifications() {
 }
 
 export async function sendTokenToBackend(token) {
-  if (!token) return;
-  try {
-    await client.post('/devices/register', {
-      token: token,
-      platform: Platform.OS
-    });
-  } catch (error) {
-    console.error('[Push] Backend register error:', error.message);
-  }
+  // Standalone local version: Skip sending token to remote backend
+  console.log('[Push] Standalone version: Skipping remote token registration');
+  return;
 }
 
 /**
- * Schedules a LOCAL notification for 2 hours later.
+ * Schedules a LOCAL notification for 1 minute later (TEMPORARY FOR DEMO).
  */
 export async function schedulePositionChangeReminder(patientName, bedNumber) {
   try {
     const identifier = `reminder-${patientName}-${bedNumber}`;
     await Notifications.cancelScheduledNotificationAsync(identifier);
 
-    // Set to 7200 seconds (2 hours)
+    // Set to 7200 seconds (2 hours) for real patient care use
     const seconds = 7200; 
     
     const id = await Notifications.scheduleNotificationAsync({
@@ -113,7 +107,7 @@ export async function schedulePositionChangeReminder(patientName, bedNumber) {
       identifier: identifier
     });
 
-    console.log(`[LocalPush] Scheduled 2-hour reminder for ${patientName}.`);
+    console.log(`[LocalPush] Scheduled 1-minute reminder for ${patientName}.`);
     return id;
   } catch (error) {
     console.error('[LocalPush] Schedule error:', error);

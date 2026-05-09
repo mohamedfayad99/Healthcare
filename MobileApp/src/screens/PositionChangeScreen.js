@@ -5,6 +5,9 @@ import localApiService from '../api/localApiService';
 import Toast from 'react-native-root-toast';
 import { PATIENT_POSITIONS } from '../constants/positions';
 import { schedulePositionChangeReminder } from '../api/notificationHelper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+// Removed PositionVisual component as we are now using actual images
 
 export default function PositionChangeScreen({ route, navigation }) {
   const { patientId, patientName, bedNumber } = route.params;
@@ -31,7 +34,7 @@ export default function PositionChangeScreen({ route, navigation }) {
         backgroundColor: '#28A745',
       });
 
-      // Schedule LOCAL notification for 2 hours later
+      // Schedule LOCAL notification for 1 minute later (TEMP FOR DEMO)
       await schedulePositionChangeReminder(patientName, bedNumber);
 
       navigation.goBack();
@@ -60,15 +63,14 @@ export default function PositionChangeScreen({ route, navigation }) {
         {PATIENT_POSITIONS.map(pos => (
           <TouchableOpacity 
             key={pos.id} 
-            style={[styles.positionCard, selectedPosition === pos.id && styles.selectedCard]}
+            style={[
+              styles.positionCard, 
+              selectedPosition === pos.id && styles.selectedCard
+            ]}
             onPress={() => setSelectedPosition(pos.id)}
           >
             <View style={styles.imageContainer}>
-              <Image 
-                source={pos.image} 
-                style={styles.positionImage} 
-                resizeMode="contain"
-              />
+              <Image source={pos.image} style={styles.positionImage} resizeMode="contain" />
             </View>
             <Text style={[styles.positionLabel, selectedPosition === pos.id && styles.selectedLabel]}>
               {t(pos.labelKey)}
@@ -173,5 +175,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8
   },
-  saveButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' }
+  saveButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  emojiBadge: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    borderRadius: 20,
+    width: 34,
+    height: 34,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#eee'
+  },
+  emojiText: {
+    fontSize: 20,
+  },
+  visualContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+  },
+  positionImage: {
+    width: '100%',
+    height: '100%',
+  }
 });

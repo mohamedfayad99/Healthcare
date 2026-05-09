@@ -34,6 +34,19 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert(t('alert'), 'يرجى إدخال جميع الحقول المطلوبة');
       return;
     }
+
+    // National ID Validation (14 digits)
+    if (!/^\d{14}$/.test(nationalId)) {
+      Alert.alert(t('alert'), t('invalid_national_id'));
+      return;
+    }
+
+    // Phone Number Validation (11 digits)
+    if (!/^\d{11}$/.test(phoneNumber)) {
+      Alert.alert(t('alert'), t('invalid_phone_number'));
+      return;
+    }
+
     if (password !== confirmPassword) {
       Alert.alert(t('alert'), 'كلمة المرور غير متطابقة');
       return;
@@ -118,6 +131,7 @@ export default function RegisterScreen({ navigation }) {
             value={nationalId}
             onChangeText={setNationalId}
             keyboardType="number-pad"
+            maxLength={14}
             textAlign="right"
           />
 
@@ -128,6 +142,7 @@ export default function RegisterScreen({ navigation }) {
             value={phoneNumber}
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
+            maxLength={11}
             textAlign="right"
           />
 
