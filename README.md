@@ -28,8 +28,9 @@ A comprehensive full-stack healthcare solution designed specifically to assist n
 You can use the application immediately without running any backend or development tools.
 ### 📥  Download APK
 The pre-built Android APK is available in this repository:
-/APK/PatientCareAssistant.apk
-⚠️ Requirements
+[/APK/PatientCareAssistant.apk](https://github.com/mohamedfayad99/Healthcare/tree/main/APK)
+
+### ⚠️ Requirements
 - **Android device only**
 - **Enable “Install from unknown sources”**
 - **No backend setup required (standalone build)**
