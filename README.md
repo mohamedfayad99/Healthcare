@@ -22,8 +22,21 @@ A comprehensive full-stack healthcare solution designed specifically to assist n
 - **Navigation**: React Navigation v7 (Native Stack)
 - **Styling**: Vanilla React Native Stylesheets
 - **HTTP Client**: Axios
+  
+## 📱 Mobile App (Ready to Use)
 
-## 📱 Getting Started
+You can use the application immediately without running any backend or development tools.
+
+📥 Download APK
+The pre-built Android APK is available in this repository:
+
+/APK/PatientCareAssistant.apk
+⚠️ Requirements
+-Android device only
+-Enable “Install from unknown sources”
+-No backend setup required (standalone build)
+
+## 👨‍💻 Getting Started (For Developers)
 
 ### Prerequisites
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
@@ -44,6 +57,9 @@ npm install
 npx expo start
 ```
 Scan the generated QR code with **Expo Go** (Android) or your **Camera App** (iOS) to launch the app on your device.
+## 🎯 Project Goal
+
+This system was developed as a healthcare-focused academic project to improve patient safety and assist nurses in preventing pressure ulcers through continuous monitoring and smart alerts.
 
 ## 📄 License
 This project is for educational and healthcare demonstration purposes.
