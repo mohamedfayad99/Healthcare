@@ -1,6 +1,6 @@
-# Patient Care Assistant System 
+# Patient Care Assistant
 
-A comprehensive full-stack healthcare solution designed specifically to assist nurses and caregivers in tracking and managing patient care routines. The system focuses heavily on preventing pressure ulcers by providing a reliable mechanism to log and monitor the positioning of immobile patients.
+A full-stack healthcare application designed to assist nurses and caregivers in managing patient repositioning routines and care tracking. The application enables nurses to add and manage patient records, monitor repositioning schedules, record completed position changes, and maintain patient care logs. Its primary goal is to help prevent pressure ulcers in immobile patients by ensuring timely repositioning and proper documentation of caregiving activities.
 
 ## 🚀 Features
 
@@ -57,8 +57,7 @@ npx expo start
 ```
 Scan the generated QR code with **Expo Go** (Android) or your **Camera App** (iOS) to launch the app on your device.
 ## 🎯 Project Goal
-
-This system was developed as a healthcare-focused academic project to improve patient safety and assist nurses in preventing pressure ulcers through continuous monitoring and smart alerts.
+Patient Care Assistant was developed as a healthcare-focused academic project to support nurses in monitoring and documenting patient repositioning activities. The application aims to improve patient safety, simplify daily caregiving tasks, and help reduce the risk of pressure ulcers through timely reminders and accurate care records.
 
 ## 📄 License
 This project is for educational and healthcare demonstration purposes.
